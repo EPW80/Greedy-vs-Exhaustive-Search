@@ -167,7 +167,7 @@ int main()
 				2400,		2400,		2400,	2400,	2400
 			};
 			
-			for ( int optimal_index = 0; optimal_index < optimal_weight_totals.size(); optimal_index++ )
+			for ( size_t optimal_index = 0; optimal_index < optimal_weight_totals.size(); optimal_index++ )
 			{
 				int n = optimal_index + 1;
 				double expected_weight = optimal_weight_totals[optimal_index];
