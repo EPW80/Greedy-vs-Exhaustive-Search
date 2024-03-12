@@ -181,14 +181,27 @@ void print_food_vector(const FoodVector & foods) {
 //
 // In addition, the vector includes only the first total_size food items
 // that match these criteria.
-std::unique_ptr <FoodVector> filter_food_vector(
-  const FoodVector & source, double min_weight, double max_weight, int total_size) {
+// Function to filter food items by weight and limit the number of items in the resulting vector.
+std::unique_ptr<FoodVector> filter_food_vector(
+  const FoodVector& source,     // Source vector containing food items to be filtered.
+  double min_weight,            // Minimum weight threshold for food items to be included.
+  double max_weight,            // Maximum weight threshold for food items to be included.
+  int total_size) {             // Maximum number of food items to include in the result.
 
-  auto result = std::make_unique <FoodVector> ();
-  for (const auto & item: source) {
-    if (item -> weight() >= min_weight && item -> weight() <= max_weight) {
-      result -> push_back(item);
-      if (result -> size() == static_cast < size_t > (total_size)) break;
+  // Create an empty vector to store the filtered results.
+  auto result = std::make_unique<FoodVector>();
+
+  // Iterate through each item in the source vector.
+  for (const auto& item: source) {
+
+    // Check if the item's weight is within the specified range.
+    if (item->weight() >= min_weight && item->weight() <= max_weight) {
+
+      // If it is, add the item to the result vector.
+      result->push_back(item);
+
+      // If the result vector has reached the specified maximum size, break out of the loop.
+      if (result->size() == static_cast<size_t>(total_size)) break;
     }
   }
   return result;
@@ -199,23 +212,42 @@ std::unique_ptr <FoodVector> filter_food_vector(
 // choose the foods whose weight-per-calorie is greatest.
 // Repeat until no more food items can be chosen, either because we've
 // run out of food items, or run out of space.
-std::unique_ptr <FoodVector> greedy_max_weight(const FoodVector & foods, double total_calorie) {
-  auto result = std::make_unique < FoodVector > ();
-  double current_calories = 0.0;
+std::unique_ptr<FoodVector> greedy_max_weight(const FoodVector& foods, double total_calorie) {
+    // Create an empty vector to store the result.
+    auto result = std::make_unique<FoodVector>();
+    double current_calories = 0.0;
 
-  FoodVector sorted_foods = foods;
-  std::sort(sorted_foods.begin(), sorted_foods.end(), [](const auto & a,
-    const auto & b) {
-    return (a -> weight() / a -> calorie()) > (b -> weight() / b -> calorie());
-  });
+    // Copy of foods to manipulate.
+    FoodVector remaining_foods = foods;
+    // Continue selecting items as long as there are items left and the calorie limit is not exceeded.
+    while (!remaining_foods.empty() && current_calories <= total_calorie) {
+        // Find the food item with the largest weight-per-calorie.
+        auto best_item = remaining_foods.end();
+        double best_ratio = 0.0;
 
-  for (const auto & item: sorted_foods) {
-    if ((current_calories + item -> calorie()) > total_calorie) break;
-    result -> push_back(item);
-    current_calories += item -> calorie();
-  }
-  return result;
+        // Find the best weight-per-calorie item that fits within the remaining calorie limit.
+        for (auto it = remaining_foods.begin(); it != remaining_foods.end(); ++it) {
+            double item_ratio = (*it)->weight() / (*it)->calorie();
+            if (current_calories + (*it)->calorie() <= total_calorie && item_ratio > best_ratio) {
+                best_ratio = item_ratio;
+                best_item = it;
+            }
+        }
+
+        // Add the best item found to the result vector if such an item exists.
+        if (best_item != remaining_foods.end()) {
+            current_calories += (*best_item)->calorie();  // Update the total calories.
+            result->push_back(*best_item);                // Add the item to the result.
+            remaining_foods.erase(best_item);             // Remove the item from consideration.
+        } else {
+            // If no suitable item was found, exit the loop.
+            break;
+        }
+    }
+
+    return result;
 }
+
 
 // Compute the optimal set of food items with a exhaustive search algorithm.
 // Specifically, among all subsets of food items, return the subset
@@ -226,13 +258,17 @@ std::unique_ptr <FoodVector> exhaustive_max_weight(const FoodVector & foods, dou
   auto best_subset = std::make_unique < FoodVector > ();
   double best_weight = 0.0;
 
+  // Calculate the total number of possible subsets by shifting 1 left by the number of food items.
   size_t subsetCount = 1ULL << foods.size();
   for (size_t i = 0; i < subsetCount; ++i) {
-    auto current_subset = std::make_unique < FoodVector > ();
+    // Create a new empty subset
+    auto current_subset = std::make_unique <FoodVector> ();
     double current_weight = 0.0, current_calories = 0.0;
 
     for (size_t j = 0; j < foods.size(); ++j) {
+      // Check if the jth bit is set in the ith subset
       if (i & (1ULL << j)) {
+        // Add the jth food item to the current subset
         current_subset -> push_back(foods[j]);
         current_weight += foods[j] -> weight();
         current_calories += foods[j] -> calorie();
@@ -240,6 +276,7 @@ std::unique_ptr <FoodVector> exhaustive_max_weight(const FoodVector & foods, dou
     }
 
     if (current_calories <= total_calorie && current_weight > best_weight) {
+      // Update the best weight and best subset found.
       best_weight = current_weight;
       best_subset = std::move(current_subset);
     }
