@@ -4,7 +4,7 @@
 
 Group member:
 
-- Erik Williams 🏴‍☠️
+- Erik Williams :gorilla:
 
 ### Description
 
