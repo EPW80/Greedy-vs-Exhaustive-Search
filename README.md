@@ -1,17 +1,18 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/Cc4Z8ua_)
+# Greedy versus Exhaustive
 
-# Project 2: Spring Camp Food
+## spring camp
 
-## Group Members
+Group member:
 
-- Erik Williams 🐒
+- Erik Williams 🏴‍☠️
 
 ### Description
 
-This project focuses on planning and optimizing food supplies for a spring camp. Our goal is to select a variety of foods that maximize nutritional value while adhering to weight and calorie constraints, using both greedy and exhaustive search algorithms.
+- set up an environment for implementing algorithms in C++, and use that to implement two algorithms that solve the same problem.
 
-### Objectives
+### Project Objective
 
-- Develop a software tool to manage and optimize food selections.
-- Implement greedy and exhaustive search algorithms for optimization.
-- Ensure the food selection meets the dietary needs of all camp participants.
+- translate descriptions of two algorithms into pseudocode; analyze pseudocode mathematically; implement each algorithm in C++; test
+  implementation; and describe results.
+
+### Results
