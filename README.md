@@ -5,6 +5,7 @@
 Group member:
 
 - Erik Williams :gorilla:
+- epwilliams@csu.fullerton.edu
 
 ### Description
 
