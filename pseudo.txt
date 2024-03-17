@@ -1,0 +1,47 @@
+Function greedy_max_weight(total_calorie, food_items):
+    selected_items <- Empty List         // 1 step
+    current_calories <- 0                // 1 step
+
+    While food_items is not empty && current_calories <= total_calorie: // Average O(n/2) steps
+        best_item <- null                  // 1 step
+        best_ratio <- 0                   // 1 step
+
+        For each item in food_items:       // n steps
+            item_ratio <- item.weight / item.calorie // 2 steps
+            If item_ratio > best_ratio && current_calories + item.calorie <= total_calorie: // 4 steps
+                best_item <- item         // 1 step
+                best_ratio <- item_ratio  // 1 step
+
+        If best_item is not null:         
+            selected_items.add(best_item) // 1 step
+            current_calories += best_item.calorie // 2 steps
+            food_items.remove(best_item) //  1 step 
+        Else:
+            Break // Exit if no suitable item found 1 step
+    Return selected_items
+End Function
+
+-------------------------------------------------------------------------------------
+
+Function exhaustive_max_weight(foods, total_calorie):
+best_subset <- Create Empty FoodVector // 1 step
+best_weight <- 0.0 // 1 step
+subsetCount <- 2 raised to the power n
+
+For i from 0 to subsetCount - 1: // n steps
+    current_subset <- Create Empty FoodVector // 1 step
+    current_weight <- 0.0 //1 step
+    current_calories <- 0.0 // 1 step
+
+    For j from 0 to number of items in foods - 1: // n steps
+        If jth bit in i is set:
+            Add foods[j] to current_subset // 1 step
+            Add weight of foods[j] to current_weight // 1 step
+            Add calories of foods[j] to current_calories // 1 step
+
+    If current_calories is within total_calorie && current_weight is greater than best_weight:
+        best_weight <- current_weight // 1 step
+        best_subset <- current_subset// 1 step
+
+Return best_subset
+

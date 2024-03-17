@@ -17,3 +17,5 @@ Group member:
   implementation; and describe results.
 
 ### Results
+
+[Greedy vs Exhaustive](./Greedy%20VS%20Exhaustive%20Search.pdf)
