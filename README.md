@@ -1,13 +1,8 @@
-# Greedy versus Exhaustive
-
-## spring camp
-
-Group member:
+# Greedy versus Exhaustive Search
 
 - Erik Williams :gorilla:
-- epwilliams@csu.fullerton.edu
 
-### Description
+## Description
 
 - set up an environment for implementing algorithms in C++, and use that to implement two algorithms that solve the same problem.
 
