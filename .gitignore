@@ -1,4 +1,38 @@
-rubrictest.hh
+# Compiled binaries
+maxweight_test
+maxweight_scatterplot
 scatterplot
+*.o
+*.out
+
+# Legacy filenames (original .gitignore)
+rubrictest.hh
 exhaustive.csv
 greedy.csv
+
+# Generated CSV output files
+*_detailed.csv
+comparison.csv
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv
+
+# Generated plots (reproducible via `make visualize`)
+plots/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

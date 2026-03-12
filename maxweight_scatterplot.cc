@@ -10,8 +10,8 @@ using namespace std;
 
 int main()
 {
-  ofstream greedy("greedy.csv");
-  greedy << "n,seconds" << endl;
+  ofstream greedy("greedy_detailed.csv");
+  greedy << "n,execution_time_sec,weight_achieved,calories_used,items_selected" << endl;
   greedy << fixed << setprecision(10);
 
   auto all_foods = load_food_database("food.csv");
@@ -24,12 +24,16 @@ int main()
 
     Timer timer;
     auto solution = greedy_max_weight(*small_foods, 2000);
-    greedy << n << "," << timer.elapsed() << endl;
+    double total_calories, total_weight;
+    sum_food_vector(*solution, total_calories, total_weight);
+    greedy << n << "," << timer.elapsed() << ","
+           << total_weight << "," << total_calories << ","
+           << solution->size() << endl;
   }
   greedy.close();
 
-  ofstream exhaustive("exhaustive.csv");
-  exhaustive << "n,seconds" << endl;
+  ofstream exhaustive("exhaustive_detailed.csv");
+  exhaustive << "n,execution_time_sec,weight_achieved,calories_used,items_selected" << endl;
   exhaustive << fixed << setprecision(10);
 
   for(int i = 0; i < 50; i++)
@@ -39,7 +43,11 @@ int main()
 
     Timer timer;
     auto solution = exhaustive_max_weight(*small_foods, 2000);
-    exhaustive << n << "," << timer.elapsed() << endl;
+    double total_calories, total_weight;
+    sum_food_vector(*solution, total_calories, total_weight);
+    exhaustive << n << "," << timer.elapsed() << ","
+              << total_weight << "," << total_calories << ","
+              << solution->size() << endl;
   }
   exhaustive.close();
 }
